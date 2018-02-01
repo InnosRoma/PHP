@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Main Page</title>
+  <link rel="stylesheet" href="vendor/purecss/pure.css">
+  <link rel="stylesheet" href="assets/css/listing.css">
+  <script type="text/javascript" src="vendor/vuejs/vue.js"></script>
+  <script type="text/javascript" src="data.js"></script>
+  <script type="text/javascript" src="assets/js/listing.js"></script>
+</head>
+
+<body>
+  <div class="page-wrap">
+    <form class="pure-form">
+       <fieldset>
+        <input type="text" name="firstname" value="">
+        <select>
+          <option>Name</option>
+          <option>Phone</option>
+          <option>Interests</option>
+        </select>
+        <button type="submit" class="pure-button pure-button-primary button">Search</button>
+      </fieldset>
+       <div id="UserList">
+        <table class="pure-table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Age</th>
+              <th>Operations</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="user in currentUsers">
+              <td> {{user.id}} </td>
+              <td> {{user.firstName}} {{user.lastName}} </td>
+              <td> {{user.phone}} </td>
+              <td> {{user.age}} </td>
+              <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <a href="#">&laquo;</a>
+          <a href="#" v-for="page in pages" v-on:click="count()">{{page}}</a>
+          <a href="#">&raquo;</a>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script src="assets/js/listing.js"></script>
+</body>
+
+</html>
