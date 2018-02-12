@@ -1,7 +1,7 @@
 //
 //Interests
 //
-$Interests = [
+var Interests = [
 {"id":0,"description":"Плавание"},
 {"id":1,"description":"Бодибилдинг"},
 {"id":2,"description":"Бег"},
@@ -248,11 +248,11 @@ $Interests = [
 {"id":243,"description":"Глобусы"},
 {"id":244,"description":"Психологические тесты"},
 {"id":245,"description":"Значки"}
-];
+]
 //
 //Users
 //
-$Persons = [
+var Persons = [
 {"id":0,"firstName":"Clinton","lastName":"Clift","age": 91, "phone": 138481,"active": 1,"interests": [239,121,152,142]},
 {"id":1,"firstName":"Angle","lastName":"Lavine","age": 21, "phone": 608314,"active": 0,"interests": [29,85,229,111,185,167]},
 {"id":2,"firstName":"Man","lastName":"Hazlett","age": 84, "phone": 566910,"active": 1,"interests": [184,7]},
@@ -403,11 +403,11 @@ $Persons = [
 {"id":147,"firstName":"Lakeesha","lastName":"Rabin","age": 104, "phone": 676435,"active": 0,"interests": [37]},
 {"id":148,"firstName":"Rico","lastName":"Scannell","age": 84, "phone": 442603,"active": 1,"interests": [80,216,109]},
 {"id":149,"firstName":"See","lastName":"Bertucci","age": 59, "phone": 350022,"active": 1,"interests": [167,227,197,49]}
-];
+]
 //
 //Usernames and password
 //
-$Users = [
+var Users = [
 {"username":"Clinton","password":"Clinton0"},
 {"username":"Angle","password":"Angle1"},
 {"username":"Man","password":"Man2"},
@@ -457,5 +457,4 @@ $Users = [
 {"username":"Myrna","password":"Myrna46"},
 {"username":"Arnulfo","password":"Arnulfo47"},
 {"username":"Terese","password":"Terese48"},
-{"username":"Camellia","password":"Camellia49"}
-];
+{"username":"Camellia","password":"Camellia49"}]

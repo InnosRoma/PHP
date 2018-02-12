@@ -12,7 +12,7 @@
         10. Add editInterest.
         11. Add deleteInterest.
         12. Check endpoints.
-    2. Add connection to DB.
+    2. Add connection to DB. X
 1. Make site.
     1. Add HTML pages.
         1. Login page.
