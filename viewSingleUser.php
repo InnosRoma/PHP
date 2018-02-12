@@ -3,7 +3,7 @@ $db = new SQLite3('user-store.db');
 header("Content-type:application/json");
 $q = $_GET['q'];
 if ($q == 'user') {
-    $sql = 'SELECT * FR OM Person WHERE id = ' . $_GET['id'];
+    $sql = 'SELECT * FROM Person WHERE id = ' . $_GET['id'];
     $results = $db->query($sql);
     $row = array();
     $err = array('status' => 'err', 'message' => 'Error!');
