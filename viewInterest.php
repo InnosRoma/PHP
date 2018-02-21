@@ -2,7 +2,7 @@
 $db = new SQLite3('user-store.db');
 header('Content-Type: application/json; charset=utf-8');
 $q = $_GET['q'];
-if ($q == 'interest') {
+if ($q == 'interest/view') {
     $sql = 'SELECT * FROM Interest WHERE id = ' . $_GET['id'];
     $results = $db->query($sql);
     $row = array();
