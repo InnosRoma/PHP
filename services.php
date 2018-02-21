@@ -2,7 +2,6 @@
 $db = new SQLite3('user-store.db');
 header("Content-type:application/json");
 $q = $_GET['q'];
-$value = $_GET['value'];
 $row = array();
 $err = array('status' => 'err', 'message' => 'Error!');
 switch ($q) {
@@ -21,6 +20,7 @@ switch ($q) {
                 echo json_encode($personArray, JSON_UNESCAPED_UNICODE);
             }
         }
+        break;
     case "user/list":
         $sql = 'SELECT * FROM Person limit 20 offset ' . $_GET['page'];
         $results = $db->query($sql);
@@ -31,6 +31,7 @@ switch ($q) {
         if (isset($res['id'])) {
             echo $errJSON = json_encode($err, JSON_UNESCAPED_UNICODE);
         }
+        break;
     case "user/view":
         $sql = 'SELECT * FROM Person limit 20 offset ' . $_GET['page'];
         $results = $db->query($sql);
@@ -42,10 +43,11 @@ switch ($q) {
         if (isset($res['id'])) {
             echo $errJSON = json_encode($err, JSON_UNESCAPED_UNICODE);
         }
+        break;
     case "user/search":
+        break;
     case "user/edit":
-        $statement = $db->prepare('UPDATE Person SET
-        firstName = :firstName, lastName = :lastName, phone = :phone, active = :active, age = :age WHERE id =' . $_GET['id']);
+        $statement = $db->prepare('UPDATE Person SET firstName = :firstName, lastName = :lastName, phone = :phone, active = :active, age = :age WHERE id =' . $_GET['id']);
         $statement->bindValue(':firstName', $_GET['firstName']);
         $statement->bindValue(':lastName', $_GET['lastName']);
         $statement->bindValue(':phone', $_GET['phone']);
@@ -57,12 +59,14 @@ switch ($q) {
                 'active' => $_GET['active'], 'age' => $_GET['age']];
             echo json_encode($personArray, JSON_UNESCAPED_UNICODE);
         }
+        break;
     case "user/delete":
         $sql1 = 'DELETE FROM Person WHERE id = ' . $_GET['id'];
         $sql2 = 'DELETE FROM Person_Interests WHERE personId = ' . $_GET['id'];
         $results1 = $db->query($sql1);
         $results2 = $db->query($sql2);
         echo json_encode("User was deleted.");
+        break;
     case "interest/new":
         $statement = $db->prepare('INSERT INTO Interest(description) VALUES(:description)');
         if ($statement) {
@@ -70,6 +74,7 @@ switch ($q) {
             $result = $statement->execute();
         }
         echo $newInterestJSON = json_encode($statement, JSON_UNESCAPED_UNICODE);
+        break;
     case "interest/view":
         $sql = 'SELECT * FROM Interest WHERE id = ' . $_GET['id'];
         $results = $db->query($sql);
@@ -93,7 +98,9 @@ switch ($q) {
             $errJSON = json_encode($err, JSON_UNESCAPED_UNICODE);
             echo $errJSON;
         }
+        break;
     case "interest/search":
+        $value = $_GET['value'];
         $i = 0;
         $sql = "SELECT * FROM Interest WHERE description LIKE '%$value$%'";
         $results = $db->query($sql);
@@ -106,6 +113,7 @@ switch ($q) {
                 echo json_encode($err, JSON_UNESCAPED_UNICODE);
             }
         }
+        break;
     case "interest/edit":
         $statement = $db->prepare('UPDATE Interest SET description = :description WHERE id =' . $_GET['id']);
         $statement->bindValue(':description', $_GET['description']);
@@ -114,6 +122,7 @@ switch ($q) {
             $personArray = ['description' => $_GET['description']];
             echo json_encode($personArray, JSON_UNESCAPED_UNICODE);
         }
+        break;
     case "interest/delete":
         $sql1 = 'DELETE FROM Interest WHERE id = ' . $_GET['id'];
         $sql2 = 'DELETE FROM Person_Interests WHERE interestId = ' . $_GET['id'];
