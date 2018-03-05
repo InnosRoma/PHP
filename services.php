@@ -17,27 +17,27 @@ switch ($q) {
             if ($result === true) {
                 $personArray = ['firstName' => $_GET['firstName'], 'lastName' => $_GET['lastName'], 'phone' => $_GET['phone'],
                     'active' => $_GET['active'], 'age' => $_GET['age']];
-                echo json_encode($personArray, JSON_UNESCAPED_UNICODE);
-            }
+                echo json_encode("Person was created");
+            } else json_encode($err, JSON_UNESCAPED_UNICODE);
         }
         break;
     case "user/list":
-        $sql = 'SELECT * FROM Person limit 20 offset ' . $_GET['page'];
-        $results = $db->query($sql);
-
-        while ($res = $results->fetchArray(SQLITE3_ASSOC)) {
-            echo $personJSON = json_encode($res, JSON_UNESCAPED_UNICODE);
-        }
-        if (isset($res['id'])) {
-            echo $errJSON = json_encode($err, JSON_UNESCAPED_UNICODE);
+        $statement = $db->prepare('SELECT * FROM Person limit 20 offset :page');
+        if($statement) {
+            $statement->bindValue(':page', $_GET['page']);
+            $result = $statement->execute();
+            if($result == true) {
+                while ($res = $result->fetchArray(SQLITE3_ASSOC)) {
+                    echo json_encode($res, JSON_UNESCAPED_UNICODE);
+                }
+            } else json_encode($err, JSON_UNESCAPED_UNICODE);
         }
         break;
     case "user/view":
-        $sql = 'SELECT * FROM Person limit 20 offset ' . $_GET['page'];
-        $results = $db->query($sql);
-        $row = array();
-
-        while ($res = $results->fetchArray(SQLITE3_ASSOC)) {
+        $statement = $db->prepare('SELECT * FROM Person WHERE id = :id');
+        $statement->bindValue(':id', $_GET['id']);
+        $result = $statement->execute();
+        while ($res = $result->fetchArray(SQLITE3_ASSOC)) {
             echo $personJSON = json_encode($res, JSON_UNESCAPED_UNICODE);
         }
         if (isset($res['id'])) {
@@ -45,6 +45,33 @@ switch ($q) {
         }
         break;
     case "user/search":
+        if(isset($_GET['name'])){
+            $value = $_GET['name'];
+            $statement = $db->prepare("SELECT * FROM Person WHERE firstName LIKE '%" . $value . "%'");
+            $results = $statement -> execute();
+            while ($res = $results->fetchArray()) {
+                if (isset($res['id'])) {
+                    $row['firstName'] = $res['firstName'];
+                    echo json_encode($res, JSON_UNESCAPED_UNICODE);
+                } else {
+                    echo json_encode($err, JSON_UNESCAPED_UNICODE);
+                }
+            }
+        }
+        if(isset($_GET['phone'])){
+            $value = $_GET['phone'];
+            $statement = $db->prepare("SELECT * FROM Person WHERE phone LIKE '%" . $value . "%'");
+            $results = $statement -> execute();
+            while ($res = $results->fetchArray()) {
+                if (isset($res['id'])) {
+                    $row['phone'] = $res['phone'];
+                    echo json_encode($res, JSON_UNESCAPED_UNICODE);
+                } else {
+                    echo json_encode($err, JSON_UNESCAPED_UNICODE);
+                }
+            }
+        }
+
         break;
     case "user/edit":
         $statement = $db->prepare('UPDATE Person SET firstName = :firstName, lastName = :lastName, phone = :phone, active = :active, age = :age WHERE id =' . $_GET['id']);
@@ -101,13 +128,11 @@ switch ($q) {
         break;
     case "interest/search":
         $value = $_GET['value'];
-        $i = 0;
-        $sql = "SELECT * FROM Interest WHERE description LIKE '%$value$%'";
-        $results = $db->query($sql);
+        $statement = $db->prepare("SELECT * FROM Interest WHERE description LIKE '%" . $value . "%'");
+        $results = $statement -> execute();
         while ($res = $results->fetchArray()) {
             if (isset($res['id'])) {
-                $row[$i]['description'] = $res['description'];
-                $i++;
+                $row['description'] = $res['description'];
                 echo json_encode($row, JSON_UNESCAPED_UNICODE);
             } else {
                 echo json_encode($err, JSON_UNESCAPED_UNICODE);
@@ -129,4 +154,14 @@ switch ($q) {
         $results1 = $db->query($sql1);
         $results2 = $db->query($sql2);
         echo json_encode("Interest was deleted");
+        break;
+    case "login":
+        $connection = new SQLite3('user-store.db');
+        if(isset($_GET['name']) && isset($_GET['password'])){
+            $statement = $db->prepare('SELECT * FROM Person WHERE id = :id');
+            $statement->bindValue(':id', $_GET['id']);
+            $result = $statement->execute();
+        } else
+            echo json_encode($err, JSON_UNESCAPED_UNICODE);
+        break;
 }

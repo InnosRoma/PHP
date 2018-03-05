@@ -11,7 +11,9 @@
         9. Add searchInterest.
         10. Add editInterest.
         11. Add deleteInterest.
-        12. Check endpoints.
+        12. Create Login.
+        13. Create Logout.
+        14. Check endpoints
     2. Add connection to DB.
 1. Make site.
     1. Add HTML pages.
