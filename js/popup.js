@@ -2,16 +2,16 @@ var interests = [];
 var persons = [];
 
 function ViewUser() {
-  var popup = document.getElementById("myPopup");
+  var popup = document.getElementById("data-id");
   popup.classList.toggle("show");
 }
 
-function addData(JSONusers, JSONinterests) {
-  if (JSONusers === undefined && JSONinterests === undefined) {
+function addData(JSONuser, JSONinterest) {
+  if (JSONuser === undefined && JSONinterest === undefined) {
     document.write("undefined")
   } else {
-    persons = JSONusers;
-    interests = JSONinterests;
+    person = JSONuser;
+    interest = JSONinterest;
   }
 }
 

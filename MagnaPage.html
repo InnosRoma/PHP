@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Main Page</title>
   <link rel="stylesheet" href="vendor/purecss/pure.css">
+  <link rel="stylesheet" href="css/MagnaPage.css"> 
+  <link rel="stylesheet" href="css/user-view.css">
   <link rel="stylesheet" href="css/listing.css">
-  <link rel="stylesheet" href="css/MagnaPage.css">  
   <script type="text/javascript" src="vendor/vuejs/vue.js"></script>
   <script src="vendor/jquery/jquery-3.3.1.js"></script>
   <script type="text/javascript" src="Magna.js"></script>
+  <!--<script type="text/javascript" src="js/listing.js"></script>-->
 </head>
-
 <body bgcolor="grey">
     <form class="pure-form">
       <div style="font-size:50px">All users:</div>
-       <fieldset style="font-size:25px" > 
+       <fieldset style="font-size:25px" >
         <input type="text" name="firstname" value="">
         <select>
           <option>Name</option>
@@ -24,6 +24,9 @@
         </select>
         <button type="submit" class="pure-button pure-button-primary button">Search</button>
       </fieldset>
+      <div align="center" class="UserViewField">
+
+      </div>
        <div id="UserList">
         <table class="pure-table" style="font-size:25px" id="table">
           <thead>
@@ -40,25 +43,26 @@
               
           </tbody>
           <script>
-            $.getJSON("http://localhost:81/PHP/services.php?q=user/list&page=1", function(){
+            $.getJSON("http://localhost/PHP/services.php?q=user/list&page=1", function(){
               console.log( "Success" );
             }).done(function(data){
               var html ="";
                for (var user_index = 0; user_index < data.length; user_index++) {
                  html += "<tr id=2>";
                  html += "<td>" + data[user_index].id + "</td>";
-                 html += "<td>" + data[user_index].first_name + " " + data[user_index].last_name + "</td>";
+                 html += "<td>" + data[user_index].firstName + " " + data[user_index].lastName + "</td>";
                  html += "<td>" + data[user_index].phone + "</td>";
                  html += "<td>" + data[user_index].age + "</td>";
                  html += "<td>" + data[user_index].active + "</td>";
-                 html += "<td><a class=\"edit\" href=\"MagnaPage.html\" data-id=\""+data[user_index].id+"\">Edit</a> | <a class=\"delete\" href=\"MagnaPage.html\" data-id=\""+data[user_index].id+"\">Delete</a></td>";
+                 html += "<td><button class=\"edit pure-button\" data-id=\""+data[user_index].id+"\">Edit</button>" +
+                 " <button class=\"delete pure-button\" data-id=\""+data[user_index].id+"\">Delete</button></td>";
                  html += "</tr>";
        }
        $('table.pure-table tbody').html(html);
             }).fail(function(){
               console.log( "Error" );
               alert("Error");
-            }); 
+            });
           </script>
         </table>
         <div class="pagination" style="font-size: 40px;">

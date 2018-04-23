@@ -17,10 +17,10 @@
 //   });
 // console.log($("td>a"));
 
-$(document).on("click", "td a.delete", function(event) {
+$(document).on("click", "td button.delete", function(event) {
     event.preventDefault(); 
     var client_id = $(this).attr("data-id");
-    var server_url = "http://localhost:81/PHP/services.php?q=user/delete&id=" + client_id;
+    var server_url = "http://localhost/PHP/services.php?q=user/delete&id=" + client_id;
     $(this).parents('tr').remove();
     console.log(client_id);
     $.ajax(server_url, function(){
@@ -28,3 +28,20 @@ $(document).on("click", "td a.delete", function(event) {
         }).done(function(){
     });
 });
+
+$(document).on("click", "td button.edit", function(event) {
+    event.preventDefault();
+    var client_id = $(this).attr("data-id");
+    var server_url = "http://localhost/PHP/services.php?q=user/view&id=" + client_id;
+    console.log(client_id);
+    $.getJSON(server_url, function(){
+        console.log( "Success" );
+    }).done(function(data){
+        var html ="";
+        html+="<div align=\"center\" style=\"font-size:25px>\"" + data[client_id].firstName + " " + data[client_id].lastName + "<div>"
+        html+="<div align=\"left\" style=\"font-size:20px>\"" + data[client_id].phone + "<div>"
+        html+="<div align=\"left\" style=\"font-size:20px>\"" + data[client_id].age + "<div>"
+        html+="<div align=\"left\" style=\"font-size:20px>\"" + data[client_id].active + "<div>"
+        $('div.UserViewField').html(html);
+        });
+  });
