@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <title>Main Page</title>
   <link rel="stylesheet" href="vendor/purecss/pure.css">
-  <link rel="stylesheet" href="css/MagnaPage.css"> 
+  <link rel="stylesheet" href="css/MagnaPage.css">
   <link rel="stylesheet" href="css/user-view.css">
+  <link rel="stylesheet" href="css/editUser.css">
   <link rel="stylesheet" href="css/listing.css">
   <script type="text/javascript" src="vendor/vuejs/vue.js"></script>
   <script src="vendor/jquery/jquery-3.3.1.js"></script>
@@ -23,7 +24,8 @@
           <option>Interests</option>
         </select>
         <button type="submit" class="pure-button pure-button-primary button">Search</button>
-      </fieldset>
+        </fieldset>
+    </form>
           <div id="popup1" class="overlay">
               <div class="popup">
                 <a class="close" href="#">&times;</a>
@@ -39,7 +41,7 @@
               <th>Name</th>
               <th>Phone</th>
               <th>Age</th>
-              <th>Active</th>
+              <th>Status</th>
               <th>Operations</th>
             </tr>
           </thead>
@@ -58,8 +60,9 @@
                  html += "<td>" + data[user_index].phone + "</td>";
                  html += "<td>" + data[user_index].age + "</td>";
                  html += "<td>" + data[user_index].active + "</td>";
-                 html += "<td><a href=\"#popup1\" class=\"edit pure-button\" data-id=\""+data[user_index].id+"\">Edit</a>" +
-                 " <a class=\"delete pure-button\" data-id=\""+data[user_index].id+"\">Delete</a></td>";
+                 html += "<td><a href=\"#popup1\" class=\"view pure-button\" data-id=\""+data[user_index].id+"\">View</a>" +
+                 " <a class=\"delete pure-button\" data-id=\""+data[user_index].id + "\">Delete</a>" + " <a href=\"#popup1\" class=\"edit pure-button\" data-id=\""+data[user_index].id +
+                 "\">Edit</a>" + "</td>";
                  html += "</tr>";
        }
        $('table.pure-table tbody').html(html);
@@ -75,6 +78,5 @@
           <a href="#">&raquo;</a>
         </div>
       </div>
-    </form>
 </body>
 </html>
